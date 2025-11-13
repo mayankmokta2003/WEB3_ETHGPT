@@ -11,6 +11,14 @@ export default function History() {
     },[]);
 
 
+    function clearHistory() {
+        if (window.confirm("⚠️ Are you sure you want to delete all AI history?")) {
+            localStorage.removeItem("history");
+            setHistory([]);
+        }
+    }
+
+
     return(
 
         <div>
@@ -33,6 +41,12 @@ export default function History() {
                 </div>
 
             )}
+
+            <div>
+                <button onClick={clearHistory}> Clear History 🗑️</button>
+            </div>
+
+
 
         </div>
 

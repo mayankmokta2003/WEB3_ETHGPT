@@ -1,8 +1,10 @@
 import AskAI from "./components/AskAi";
 import GetResponse from "./components/GetResponse";
-import RecentPrompts from "./components/RecentPrompts";
+// import RecentPrompts from "./components/RecentPrompts";
 import { useState } from "react";
 import History from "./components/History";
+import CancelRequest from "./components/CancelRequest";
+
 
 function App() {
 
@@ -12,6 +14,7 @@ function App() {
    <div>
     <AskAI setLatestId={setLatestId}/>
     <GetResponse latestId={latestId}/>
+    <CancelRequest />
     <History />
     {/* <RecentPrompts />  */}
    </div>

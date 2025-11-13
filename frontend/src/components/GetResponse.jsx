@@ -56,7 +56,7 @@
 
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { ETHGPT_ABI, ETHGPT_ADDRESS, VITE_INFURA_WSS_URL } from "../utils/constants";
+import { ETHGPT_ABI, ETHGPT_ADDRESS, VITE_INFURA_WSS_URL, VITE_ALCHEMY_URL } from "../utils/constants";
 
 export default function GetResponse({ latestId }) {
   const [response, setResponse] = useState("Waiting for AI response...");
@@ -67,6 +67,7 @@ export default function GetResponse({ latestId }) {
 
     // 🔌 Use WebSocket provider (Infura)
     const provider = new ethers.WebSocketProvider(VITE_INFURA_WSS_URL);
+    // const provider = new ethers.WebSocketProvider(VITE_ALCHEMY_URL);
     const contract = new ethers.Contract(ETHGPT_ADDRESS, ETHGPT_ABI, provider);
 
     // 🧩 Main event handler

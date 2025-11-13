@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { useState } from "react";
 import { ETHGPT_ADDRESS, ETHGPT_ABI } from "../utils/constants";
 
+
 export default function AskAI({ setLatestId }) {
   const [account, setAccount] = useState();
   const [signer, setSigner] = useState();
@@ -79,9 +80,9 @@ export default function AskAI({ setLatestId }) {
     setLatestId(newId);
     setLoading(false);
 
-    const prev = JSON.parse(localStorage.getItem("prompts")) || [];
-    prev.unshift(prompt);
-    localStorage.setItem("prompts",JSON.stringify(prev.slice(0,5)));
+    // const prev = JSON.parse(localStorage.getItem("prompts")) || [];
+    // prev.unshift(prompt);
+    // localStorage.setItem("prompts",JSON.stringify(prev.slice(0,5)));
 
   }
 

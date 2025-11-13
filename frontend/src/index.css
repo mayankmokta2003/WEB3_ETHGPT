@@ -90,3 +90,12 @@ body {
     color: #58a6ff;
   }
   
+
+  input {
+    background: #161b22;
+    color: white;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 8px;
+    margin-right: 10px;
+  }
