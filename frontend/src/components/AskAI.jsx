@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { useState } from "react";
-import { ETHGPT_ADDRESS, ETHGPT_ABI } from "./utils/constants";
+import { ETHGPT_ADDRESS, ETHGPT_ABI } from "../utils/constants";
 
 export default function AskAI({ setLatestId }) {
   const [account, setAccount] = useState();
@@ -64,6 +64,7 @@ export default function AskAI({ setLatestId }) {
     if(!prompt){
       return alert("PLEASE GIVE PROMPT")
     }
+    localStorage.setItem("lastPrompt",prompt);
     setLoading(true);
     const contract = new ethers.Contract(ETHGPT_ADDRESS, ETHGPT_ABI, signer);
     const tx = await contract.requestAI(prompt);

@@ -56,7 +56,7 @@
 
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { ETHGPT_ABI, ETHGPT_ADDRESS, VITE_INFURA_WSS_URL } from "./utils/constants";
+import { ETHGPT_ABI, ETHGPT_ADDRESS, VITE_INFURA_WSS_URL } from "../utils/constants";
 
 export default function GetResponse({ latestId }) {
   const [response, setResponse] = useState("Waiting for AI response...");
@@ -75,6 +75,19 @@ export default function GetResponse({ latestId }) {
       if (id.toString() === latestId.toString()) {
         console.log("✅ ID match found! Updating UI...");
         setResponse(answer);
+
+         // Save Q&A to local storage
+        const oldHishtory = JSON.parse(localStorage.getItem("history")) || [];
+        const newEntry = {
+          id: id,
+          prompt: localStorage.getItem("lastPrompt") || "Unknown Prompt",
+          answer: answer,
+          timestamp: new Date().toLocaleString(),
+        }
+        oldHishtory.unshift(newEntry);
+        localStorage.setItem("history",JSON.stringify(oldHishtory.slice(0,10)));
+
+
         clearInterval(polling); // stop polling once we get it
       } else {
         console.log("⚠️ Event ID mismatch, ignoring...");

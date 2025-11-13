@@ -2,6 +2,7 @@ import AskAI from "./components/AskAi";
 import GetResponse from "./components/GetResponse";
 import RecentPrompts from "./components/RecentPrompts";
 import { useState } from "react";
+import History from "./components/History";
 
 function App() {
 
@@ -11,7 +12,8 @@ function App() {
    <div>
     <AskAI setLatestId={setLatestId}/>
     <GetResponse latestId={latestId}/>
-    <RecentPrompts /> 
+    <History />
+    {/* <RecentPrompts />  */}
    </div>
   )
 }
