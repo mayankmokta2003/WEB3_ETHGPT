@@ -1,13 +1,19 @@
-import Connection from "./components/Connection"
+import AskAI from "./components/AskAi";
+import GetResponse from "./components/GetResponse";
+import RecentPrompts from "./components/RecentPrompts";
+import { useState } from "react";
 
 function App() {
 
+  const [latestId, setLatestId] = useState(null);
+
   return (
    <div>
-    <h1 className="text-red-900">heyyyyyyy</h1>
-    <Connection />
+    <AskAI setLatestId={setLatestId}/>
+    <GetResponse latestId={latestId}/>
+    <RecentPrompts /> 
    </div>
   )
 }
 
-export default App
+export default App;

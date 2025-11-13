@@ -26,20 +26,20 @@ contract.on("AIRequested", async (id, requester, prompt) => {
     console.log(`From: ${requester}`);
     console.log(`Prompt: ${prompt}`);
 
-    const chat = await openai.chat.completions.create({
-      // model: "gpt-4o-mini",
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 150,
-    });
+    // const chat = await openai.chat.completions.create({
+    //   // model: "gpt-4o-mini",
+    //   model: "gpt-3.5-turbo",
+    //   messages: [{ role: "user", content: prompt }],
+    //   max_tokens: 150,
+    // });
 
-    const answer = chat.choices[0].message.content;
-    console.log("💬 GPT Answer:", answer);
+    // const answer = chat.choices[0].message.content;
+    // console.log("💬 GPT Answer:", answer);
 
 
     // //  AI response testing purpose (no OpenAI key needed)
-    // const answer = `🤖 Simulated AI Reply: "${prompt}" means blockchain is a decentralized ledger.`;
-    // console.log("💬 GPT Answer:", answer);
+    const answer = `🤖 Simulated AI Reply: "${prompt}" means blockchain is a decentralized ledger.`;
+    console.log("💬 GPT Answer:", answer);
 
     const tx = await contract.fulfill(id, answer);
     console.log("📤 Sending transaction:", tx.hash);
