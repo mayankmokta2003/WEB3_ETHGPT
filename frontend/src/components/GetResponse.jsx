@@ -65,7 +65,7 @@ export default function GetResponse({ latestId }) {
 
   return (
     <div className="flex flex-col items-center justify-center text-white">
-      <div className="bg-[#161b22] p-6 rounded-2xl shadow-xl w-200 text-center">
+      <div className="bg-gradient-to-r from-red-950 to-gray-950 p-6 rounded-2xl shadow-xl w-200 text-center border-2 border-orange-900">
         <h2 className="text-2xl font-semibold mb-3">🧠 AI Response</h2>
 
         {loading ? (

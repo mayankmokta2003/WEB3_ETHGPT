@@ -38,7 +38,7 @@ contract.on("AIRequested", async (id, requester, prompt) => {
 
 
     // //  AI response testing purpose (no OpenAI key needed)
-    const answer = `🤖 Simulated AI Reply: "${prompt}" means blockchain is a decentralized ledger.`;
+    const answer = `🤖 Simulated AI Reply: "${prompt}"<br/> means blockchain is a decentralized ledger.`;
     console.log("💬 GPT Answer:", answer);
 
     const tx = await contract.fulfill(id, answer);

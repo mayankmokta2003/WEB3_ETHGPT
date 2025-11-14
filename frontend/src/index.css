@@ -4,14 +4,15 @@
 
 
 body {
-    background: #0d1117;
+    background: rgb(49, 40, 54);
     color: white;
     font-family: "Inter", sans-serif;
     text-align: center;
-    padding: 40px;
+    padding: 30px;
+    
   }
-/*   
-  textarea {
+  
+  /* textarea {
     border-radius: 10px;
     padding: 10px;
     width: 70%;

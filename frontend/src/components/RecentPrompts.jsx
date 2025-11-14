@@ -28,7 +28,7 @@ export default function RecentPrompts({onSelectPrompt}) {
 
     return(
         // <div className="bg-[#161b22] p-5 rounded-2xl shadow-xl w-full max-w-lg mt-8">
-        <div className="bg-[#161b22] p-5 rounded-2xl shadow-xl w-full max-w-lg mt-8">
+        <div className="bg-gradient-to-r from-red-950 to-gray-950 p-5 rounded-2xl shadow-xl w-120 mb-12 border-2 border-orange-900">
       <h2 className="text-lg font-semibold mb-3">🕘 Recent Prompts</h2>
       {prompts.length === 0 ? (
           <p className="text-gray-400 text-sm">No recent prompts yet.</p>
@@ -38,7 +38,7 @@ export default function RecentPrompts({onSelectPrompt}) {
               <button
                 key={i}
                 onClick={() => onSelectPrompt(p)}
-                className="text-left bg-[#0d1117] hover:bg-[#21262d] text-gray-300 rounded-lg px-3 py-2 transition"
+                className="text-left bg-[#0d1117] hover:bg-[#21262d] text-gray-300 rounded-lg px-3 py-2 transition cursor-pointer"
               >
                 {p.length > 60 ? p.slice(0, 60) + "..." : p}
               </button>

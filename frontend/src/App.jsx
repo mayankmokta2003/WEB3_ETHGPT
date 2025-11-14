@@ -8,7 +8,7 @@ import Navbar from "./styling/Navbar";
 function App() {
 
   return (
-   <div>
+   <div className="bg-gradient-to-r from-purple-900 via-yellow-900 via-green-900 to-blue-900 rounded-2xl pt-4">
     <Navbar />
     <AskAI />
     {/* <History /> */}

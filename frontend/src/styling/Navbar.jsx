@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { ethers } from "ethers";
+
 import gpt from "../../images/gpt.png";
 import gpt1 from "../../images/gpt1.png";
 import gpt2 from "../../images/gpt2.png";
 import gpt3 from "../../images/gpt3.png";
+import gpt10 from "../../images/gpt10.png";
+import gpt20 from "../../images/gpt20.png";
+
 import logo from "../../images/logo.png";
 import { useWallet } from "../utils/wallet";
 
@@ -17,23 +19,23 @@ export default function Navbar() {
     <div className="">
       <div className="flex flex-row items-center justify-evenly">
         <img src={logo} className="h-14 w-40 rounded-2xl" />
-        <h1>About</h1>
-        <h1>Support</h1>
-        <h1>FAQ</h1>
-        <h1>Language</h1>
-        <h1>Services</h1>
-        <h1>Library</h1>
+        <h1 className="cursor-pointer">About</h1>
+        <h1 className="cursor-pointer">Support</h1>
+        <h1 className="cursor-pointer">FAQ</h1>
+        <h1 className="cursor-pointer">Language</h1>
+        <h1 className="cursor-pointer">Services</h1>
+        <h1 className="cursor-pointer">Library</h1>
         {/* <div className="bg-amber-600 w-30 rounded-3xl">
                         <h1>Learn more </h1>
                     </div> */}
         <div>
           {accounts ? (
-            <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg transition w-46">
+            <button className="bg-red-800 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition w-46">
               🔗 Connected
             </button>
           ) : (
             <button
-              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition w-46"
+              className="bg-green-700 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition w-46"
               onClick={connectWallet}
             >
               🔗 Connect Wallet
@@ -62,7 +64,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex flex-row gap-10 justify-center items-center mt-10">
-            <div className="bg-amber-600 h-30 w-35 flex flex-col justify-center items-center rounded-xl">
+            <div className="bg-gradient-to-r from-indigo-900 to-purple-900 h-30 w-35 flex flex-col justify-center items-center rounded-xl border-2 border-blue-500">
               <img src={gpt1} className="w-10 rounded-full" />
 
               <p className="text-xs">
@@ -70,7 +72,7 @@ export default function Navbar() {
               </p>
             </div>
 
-            <div className="bg-amber-600 h-30 w-35 flex flex-col justify-center items-center rounded-xl">
+            <div className="bg-gradient-to-r from-indigo-900 to-purple-900 h-30 w-35 flex flex-col justify-center items-center rounded-xl border-2 border-blue-500">
               <img src={gpt2} className="w-10 rounded-full" />
               <p className="text-xs">
                 Each and every user prompt is stored and processed via smart
@@ -78,7 +80,7 @@ export default function Navbar() {
               </p>
             </div>
 
-            <div className="bg-amber-600 h-30  w-35 flex flex-col justify-center items-center rounded-xl">
+            <div className="bg-gradient-to-r from-indigo-900 to-purple-900 h-30  w-35 flex flex-col justify-center items-center rounded-xl border-2 border-blue-500">
               <img src={gpt3} className="w-10 rounded-full" />
 
               <p className="text-xs">
