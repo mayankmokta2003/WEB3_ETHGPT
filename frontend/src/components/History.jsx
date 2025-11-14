@@ -5,10 +5,28 @@ import { useState, useEffect } from "react";
 export default function History() {
     const [history, setHistory] = useState([]);
 
+    // useEffect(() => {
+    //     const stored = JSON.parse(localStorage.getItem("history")) || [];
+    //     setHistory(stored);
+    // },[]);
+
     useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem("history")) || [];
-        setHistory(stored);
-    },[]);
+        function loadHistory() {
+          const stored = JSON.parse(localStorage.getItem("history")) || [];
+          setHistory(stored);
+        }
+      
+        // load once when mounted
+        loadHistory();
+      
+        // 🔔 Listen for the custom update event
+        window.addEventListener("historyUpdated", loadHistory);
+      
+        // cleanup on unmount
+        return () => window.removeEventListener("historyUpdated", loadHistory);
+      }, []);
+      
+      
 
 
     function clearHistory() {

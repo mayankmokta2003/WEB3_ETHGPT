@@ -1,129 +1,80 @@
-// import { useState, useEffect } from "react";
-// import { ethers } from "ethers";
-// import { ETHGPT_ABI, ETHGPT_ADDRESS,VIT_INFURA_RPC_URL } from "./utils/constants";
-
-// export default function GetResponse({latestId}) {
-
-//     const [response, setResponse] = useState("Waiting for AI response...");
-
-//     useEffect(() => {
-//         if(!window.ethereum) return;
-
-//         const provider = new ethers.BrowserProvider(window.ethereum);
-//         // const provider = new ethers.WebSocketProvider(VIT_INFURA_RPC_URL);
-
-//         const contract = new ethers.Contract(ETHGPT_ADDRESS,ETHGPT_ABI,provider);
-
-//         const handleAIFulfilled = (id,answer,oracle) => {
-//             console.log("🎯 Event triggered:", id.toString(), answer);
-//             const eventId = id.toString();
-//             if(eventId === latestId){
-//                 console.log("✅ Matching ID found. Updating UI...");
-//                 setResponse(answer);
-//             }else{
-//                 console.log("event id mismatched or smt else");
-//             }
-//         }
-//         console.log("latestId is : ",latestId);
-//         contract.on("AIFulfilled" , handleAIFulfilled);
-
-//         // suppose user clicks ask 4 times it will give 4 times response of same question or same answer 4 times
-//         return () => {
-//             contract.off("AIFulfilled" , handleAIFulfilled);
-//         }
-
-//     },[latestId]);
-
-//     return (
-//         <div>
-//       <h3>AI Response:</h3>
-//       {response ? (
-//         <p>{response}</p>
-//       ) : (
-//         <p>Waiting for AI response...</p>
-//       )}
-//     </div>
-
-//     )
-
-// }
-
-
-
-
-
-
-
-import { useState, useEffect } from "react";
+import { getWebSocketProvider } from "../utils/provider";
 import { ethers } from "ethers";
-import { ETHGPT_ABI, ETHGPT_ADDRESS, VITE_INFURA_WSS_URL, VITE_ALCHEMY_URL } from "../utils/constants";
+import { ETHGPT_ABI, ETHGPT_ADDRESS } from "../utils/constants";
+import { useState, useEffect } from "react";
 
 export default function GetResponse({ latestId }) {
   const [response, setResponse] = useState("Waiting for AI response...");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!latestId) return;
-    console.log("👂 Listening for response to ID:", latestId);
-
-    // 🔌 Use WebSocket provider (Infura)
-    const provider = new ethers.WebSocketProvider(VITE_INFURA_WSS_URL);
-    // const provider = new ethers.WebSocketProvider(VITE_ALCHEMY_URL);
+    const provider = getWebSocketProvider();
     const contract = new ethers.Contract(ETHGPT_ADDRESS, ETHGPT_ABI, provider);
 
-    // 🧩 Main event handler
     const handleAIFulfilled = (id, answer, oracle) => {
-      console.log("📡 EVENT RECEIVED:", id.toString(), answer);
-      if (id.toString() === latestId.toString()) {
-        console.log("✅ ID match found! Updating UI...");
+      const eventId = id.toString();
+      console.log("🎯 Event triggered:", eventId, answer);
+      if (eventId === latestId) {
+        console.log("✅ Matching ID found. Updating UI...");
         setResponse(answer);
+        setLoading(false);
 
-         // Save Q&A to local storage
-        const oldHishtory = JSON.parse(localStorage.getItem("history")) || [];
-        const newEntry = {
-          id: id,
-          prompt: localStorage.getItem("lastPrompt") || "Unknown Prompt",
-          answer: answer,
-          timestamp: new Date().toLocaleString(),
+        const stored = localStorage.getItem("history");
+        let oldHistory = [];
+
+        try {
+          // const stored = localStorage.getItem("history");
+          // let oldHistory = [];
+          oldHistory = stored ? JSON.parse(stored) : [];
+        } catch (e) {
+          console.error("⚠️ Corrupted history JSON, resetting...");
+          oldHistory = [];
         }
-        oldHishtory.unshift(newEntry);
-        localStorage.setItem("history",JSON.stringify(oldHishtory.slice(0,10)));
 
+        const newEntry = {
+          id: id.toString(),
+          prompt: localStorage.getItem("lastPrompt") || "Unknown Prompt",
+          answer,
+          timestamp: new Date().toLocaleString(),
+        };
 
-        clearInterval(polling); // stop polling once we get it
-      } else {
-        console.log("⚠️ Event ID mismatch, ignoring...");
+        // Add new entry to the beginning
+        oldHistory.unshift(newEntry);
+
+        // Keep only latest 10
+        localStorage.setItem(
+          "history",
+          JSON.stringify(oldHistory.slice(0, 10))
+        );
+        window.dispatchEvent(new Event("historyUpdated"));
+        console.log("🧾 History updated:", newEntry);
       }
     };
 
-    // 🔄 Fallback polling (check every 7 sec)
-    const polling = setInterval(async () => {
-      try {
-        const req = await contract.getRequest(latestId);
-        if (req.response && req.response.length > 0) {
-          console.log("✅ Got response via fallback polling!");
-          setResponse(req.response);
-          clearInterval(polling);
-        }
-      } catch (err) {
-        console.error("polling error:", err);
-      }
-    }, 7000);
-
-    // 👂 Start listening
+    console.log("latestId is:", latestId);
     contract.on("AIFulfilled", handleAIFulfilled);
+    setLoading(true);
 
     return () => {
-      console.log("🧹 Cleaning up listener...");
+      console.log("🧹 Cleaning up WebSocket listener...");
       contract.off("AIFulfilled", handleAIFulfilled);
-      clearInterval(polling);
-      provider.destroy();
     };
   }, [latestId]);
 
   return (
-    <div>
-      <h3>AI Response:</h3>
-      <p>{response}</p>
+    <div className="flex flex-col items-center justify-center text-white mt-6">
+      <div className="bg-[#161b22] p-6 rounded-2xl shadow-xl w-full max-w-lg text-center">
+        <h2 className="text-2xl font-semibold mb-3">🧠 AI Response</h2>
+
+        {loading ? (
+          <div className="flex flex-col items-center">
+            <div className="w-8 h-8 border-4 border-t-transparent border-green-400 rounded-full animate-spin mb-3"></div>
+            <p className="text-gray-400">Waiting for AI response...</p>
+          </div>
+        ) : (
+          <p className="text-green-400 whitespace-pre-line">{response}</p>
+        )}
+      </div>
     </div>
   );
 }
