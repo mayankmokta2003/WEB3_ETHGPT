@@ -27,6 +27,7 @@ export default function RecentPrompts({onSelectPrompt}) {
 
 
     return(
+        // <div className="bg-[#161b22] p-5 rounded-2xl shadow-xl w-full max-w-lg mt-8">
         <div className="bg-[#161b22] p-5 rounded-2xl shadow-xl w-full max-w-lg mt-8">
       <h2 className="text-lg font-semibold mb-3">🕘 Recent Prompts</h2>
       {prompts.length === 0 ? (

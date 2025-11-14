@@ -64,8 +64,8 @@ export default function GetResponse({ latestId }) {
   }, [latestId]);
 
   return (
-    <div className="flex flex-col items-center justify-center text-white mt-6">
-      <div className="bg-[#161b22] p-6 rounded-2xl shadow-xl w-full max-w-lg text-center">
+    <div className="flex flex-col items-center justify-center text-white">
+      <div className="bg-[#161b22] p-6 rounded-2xl shadow-xl w-200 text-center">
         <h2 className="text-2xl font-semibold mb-3">🧠 AI Response</h2>
 
         {loading ? (
@@ -78,22 +78,5 @@ export default function GetResponse({ latestId }) {
         )}
       </div>
     </div>
-
-
-  //   <div className="bg-[#161b22] p-6 rounded-2xl shadow-xl mt-6 w-full max-w-2xl">
-  //   <h3 className="text-xl font-semibold mb-3 text-green-400">🤖 AI Response</h3>
-  //   <p className="text-gray-200 whitespace-pre-wrap leading-relaxed min-h-[80px]">
-  //     {displayedText || response}
-  //     {displayedText === "" && (
-  //       <span className="inline-block animate-pulse text-gray-400 ml-1">
-  //         ▋
-  //       </span>
-  //     )}
-  //   </p>
-  // </div>
-
-
-
-
   );
 }

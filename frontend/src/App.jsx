@@ -7,14 +7,11 @@ import Navbar from "./styling/Navbar";
 
 function App() {
 
-  const [latestId, setLatestId] = useState(null);
-
   return (
    <div>
     <Navbar />
-    <AskAI setLatestId={setLatestId}/>
-    <GetResponse latestId={latestId}/>
-    <History />
+    <AskAI />
+    {/* <History /> */}
    </div>
   )
 }
