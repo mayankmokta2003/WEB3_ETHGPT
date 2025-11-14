@@ -1,9 +1,8 @@
 import AskAI from "./components/AskAi";
 import GetResponse from "./components/GetResponse";
-// import RecentPrompts from "./components/RecentPrompts";
 import { useState } from "react";
 import History from "./components/History";
-import CancelRequest from "./components/CancelRequest";
+import Navbar from "./styling/Navbar";
 
 
 function App() {
@@ -12,11 +11,10 @@ function App() {
 
   return (
    <div>
+    <Navbar />
     <AskAI setLatestId={setLatestId}/>
     <GetResponse latestId={latestId}/>
-    <CancelRequest />
     <History />
-    {/* <RecentPrompts />  */}
    </div>
   )
 }

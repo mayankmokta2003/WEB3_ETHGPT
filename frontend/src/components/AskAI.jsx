@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { useState } from "react";
 import { ETHGPT_ADDRESS, ETHGPT_ABI } from "../utils/constants";
+import RecentPrompts from "./RecentPrompts";
 
 
 export default function AskAI({ setLatestId }) {
@@ -49,14 +50,14 @@ export default function AskAI({ setLatestId }) {
   
       const events = await contract.queryFilter("AIRequested", receipt.blockNumber);
       const newId = events[0].args.id.toString();
-  
       setLatestId(newId);
-      setStatus(`✅ Request sent successfully (ID: ${newId})`);
       
-  
-      // const prev = JSON.parse(localStorage.getItem("prompts")) || [];
-      // prev.unshift(prompt);
-      // localStorage.setItem("prompts",JSON.stringify(prev.slice(0,5)));
+      const saved = JSON.parse(localStorage.getItem("prompts")) || [];
+      saved.unshift(prompt);
+      localStorage.setItem("history",JSON.stringify(saved.slice(0,5)));
+      window.dispatchEvent(new Event("promptsUpdated"));
+
+      setStatus(`✅ Request sent successfully (ID: ${newId})`);
     } catch (e) {
       console.error(e);
       setStatus("❌ Transaction failed. Please try again.");
@@ -119,12 +120,8 @@ export default function AskAI({ setLatestId }) {
       )}
 
       {status && <p className="text-center text-gray-300 mt-3">{status}</p>}
-    </div>
-  </div>
-);
-}
-    
-      {/* {txHash && (
+
+      {txHash && (
         <p>
           ⛓️ Tx Hash:{" "}
           <a
@@ -134,6 +131,24 @@ export default function AskAI({ setLatestId }) {
             {txHash.slice(0, 15)}...
           </a>
         </p>
-      )} */}
+      )}
+      
+    </div>
+    {signer ? (
+      <RecentPrompts onSelectPrompt={setPrompt} />
+    ) : (
+      <div className="bg-[#161b22] p-5 rounded-2xl shadow-xl w-full max-w-lg mt-8">
+        <h2 className="text-lg font-semibold mb-3">🕘 Recent Prompts</h2>
+<p className="text-gray-400 text-sm">Connect Metamask first to see latest prompts.</p>
+
+      </div>
+      
+    )}
+    
+  </div>
+);
+}
+    
+      
 
     
