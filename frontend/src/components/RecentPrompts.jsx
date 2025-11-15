@@ -40,7 +40,7 @@ export default function RecentPrompts({onSelectPrompt}) {
                 onClick={() => onSelectPrompt(p)}
                 className="text-left bg-[#0d1117] hover:bg-[#21262d] text-gray-300 rounded-lg px-3 py-2 transition cursor-pointer"
               >
-                {p.length > 60 ? p.slice(0, 60) + "..." : p}
+                {p.length > 50 ? p.slice(0, 50) + "......." : p}
               </button>
             ))}
           </div>

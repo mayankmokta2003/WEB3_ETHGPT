@@ -57,7 +57,7 @@ import GetResponse from "./GetResponse";
 
     <div className="flex flex-col justify-center items-center gap-10 mt-10">
 
-      <div className="bg-gradient-to-r from-red-950 to-gray-950 p-8 rounded-2xl shadow-2xl w-200 border-2 border-orange-900 ">
+      <div className="bg-linear-to-r from-red-950 to-gray-950 p-8 rounded-2xl shadow-2xl w-200 border-2 border-orange-900 ">
 
         
         <h1 className="text-3xl font-bold mb-2 text-center">🤖 ETHGPT</h1>
