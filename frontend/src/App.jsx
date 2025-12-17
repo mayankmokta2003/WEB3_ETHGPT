@@ -1,4 +1,4 @@
-import AskAI from "./components/AskAi";
+import AskAI from "./components/AskAI";
 import GetResponse from "./components/GetResponse";
 import { useState } from "react";
 import History from "./components/History";
